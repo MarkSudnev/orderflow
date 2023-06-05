@@ -1,0 +1,16 @@
+version: "3.7"
+
+volumes:
+  order-database:
+
+services:
+  order-database:
+    image: mongo:5.0.18
+    container_name: order-database
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+#    volumes:
+#      - order-database:/data/db
