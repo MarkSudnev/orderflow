@@ -20,6 +20,6 @@ public class OrderEvent {
   private UUID orderId;
   private LocalDateTime timestamp;
   private OrderEventType type;
-  private Serializable payload;
+  private Object payload;
 
 }
