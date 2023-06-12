@@ -32,29 +32,27 @@ public class OrderService {
         .stream()
         .sorted(comparing(OrderEvent::getTimestamp))
         .forEach(ev -> {
-      if (ev.getPayload() instanceof OrderCreatedEvent event) {
-        aggregate.apply(event);
-      }
-      if (ev.getPayload() instanceof ProductAddedEvent event) {
-        aggregate.apply(event);
-      }
-      if (ev.getPayload() instanceof ProductRemovedEvent event) {
-        aggregate.apply(event);
-      }
-      if (ev.getPayload() instanceof OrderCancelledEvent event) {
-        aggregate.apply(event);
-      }
-      if (ev.getPayload() instanceof OrderIssuedEvent event) {
-        aggregate.apply(event);
-      }
-      if (ev.getPayload() instanceof PaymentReceivedEvent event) {
-        aggregate.apply(event);
-      }
-    });
+          if (ev.getPayload() instanceof OrderCreatedEvent event) {
+            aggregate.apply(event);
+          }
+          if (ev.getPayload() instanceof ProductAddedEvent event) {
+            aggregate.apply(event);
+          }
+          if (ev.getPayload() instanceof ProductRemovedEvent event) {
+            aggregate.apply(event);
+          }
+          if (ev.getPayload() instanceof OrderCancelledEvent event) {
+            aggregate.apply(event);
+          }
+          if (ev.getPayload() instanceof OrderIssuedEvent event) {
+            aggregate.apply(event);
+          }
+          if (ev.getPayload() instanceof PaymentReceivedEvent event) {
+            aggregate.apply(event);
+          }
+        });
     return aggregate;
   }
-
-
 
   public void saveEvent(
       final UUID orderId,
