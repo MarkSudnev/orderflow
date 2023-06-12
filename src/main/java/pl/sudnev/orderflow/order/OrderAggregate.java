@@ -48,6 +48,9 @@ public class OrderAggregate {
   }
 
   public void apply(final ProductAddedEvent event) {
+    if (event.getQuantity() <= 0) {
+      throw new OrderValidationException("Quantity must be positive");
+    }
     final var productLine = products.getOrDefault(
         event.getProduct().getCode(),
         ProductLine.builder()

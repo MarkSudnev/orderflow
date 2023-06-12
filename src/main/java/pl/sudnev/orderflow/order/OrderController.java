@@ -9,11 +9,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.sudnev.orderflow.order.commands.AddProductCommand;
+import pl.sudnev.orderflow.order.commands.AddProductCommandHandler;
 import pl.sudnev.orderflow.order.commands.CancelOrderCommand;
+import pl.sudnev.orderflow.order.commands.CancelOrderCommandHandler;
 import pl.sudnev.orderflow.order.commands.CreateOrderCommand;
+import pl.sudnev.orderflow.order.commands.CreateOrderCommandHandler;
 import pl.sudnev.orderflow.order.commands.IssueOrderCommand;
+import pl.sudnev.orderflow.order.commands.IssueOrderCommandHandler;
 import pl.sudnev.orderflow.order.commands.MakePaymentCommand;
+import pl.sudnev.orderflow.order.commands.MakePaymentCommandHandler;
 import pl.sudnev.orderflow.order.commands.RemoveProductCommand;
+import pl.sudnev.orderflow.order.commands.RemoveProductCommandHandler;
 import pl.sudnev.orderflow.order.snapshot.OrderSnapshotService;
 
 import java.util.UUID;
@@ -23,7 +29,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderController {
 
-  private final OrderService orderService;
+  private final AddProductCommandHandler addProductCommandHandler;
+  private final RemoveProductCommandHandler removeProductCommandHandler;
+  private final CreateOrderCommandHandler createOrderCommandHandler;
+  private final IssueOrderCommandHandler issueOrderCommandHandler;
+  private final CancelOrderCommandHandler cancelOrderCommandHandler;
+  private final MakePaymentCommandHandler makePaymentCommandHandler;
   private final OrderSnapshotService orderSnapshotService;
 
   @GetMapping("/{orderId}")
@@ -33,19 +44,21 @@ public class OrderController {
 
   @PostMapping
   public UUID createOrder(@RequestBody final CreateOrderDto dto) {
-    return orderService.handle(
-        new CreateOrderCommand(UUID.randomUUID(), dto.getCustomer())
+    final var orderId = UUID.randomUUID();
+    createOrderCommandHandler.handle(
+        new CreateOrderCommand(orderId, dto.getCustomer())
     );
+    return orderId;
   }
 
   @PatchMapping("/{orderId}/issue")
   public void issueOrder(@PathVariable final UUID orderId) {
-    orderService.handle(new IssueOrderCommand(orderId));
+    issueOrderCommandHandler.handle(new IssueOrderCommand(orderId));
   }
 
   @PatchMapping("/{orderId}/cancel")
   public void cancelOrder(@PathVariable final UUID orderId) {
-    orderService.handle(new CancelOrderCommand(orderId));
+    cancelOrderCommandHandler.handle(new CancelOrderCommand(orderId));
   }
 
   @PatchMapping("/{orderId}/payment")
@@ -53,7 +66,7 @@ public class OrderController {
       @PathVariable final UUID orderId,
       @RequestBody final OrderPaymentDto dto
   ) {
-    orderService.handle(
+    makePaymentCommandHandler.handle(
         new MakePaymentCommand(orderId, dto.getAmount())
     );
   }
@@ -63,7 +76,7 @@ public class OrderController {
       @PathVariable final UUID orderId,
       @RequestBody final AddProductDto dto
   ) {
-    orderService.handle(
+    addProductCommandHandler.handle(
         new AddProductCommand(orderId, dto.getProductCode(), dto.getQuantity())
     );
   }
@@ -73,7 +86,7 @@ public class OrderController {
       @PathVariable final UUID orderId,
       @RequestBody final RemoveProductDto dto
   ) {
-    orderService.handle(
+    removeProductCommandHandler.handle(
         new RemoveProductCommand(orderId, dto.productCode, dto.getQuantity())
     );
   }
