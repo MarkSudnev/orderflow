@@ -12,7 +12,6 @@ import pl.sudnev.orderflow.order.events.OrderIssuedEvent;
 import pl.sudnev.orderflow.order.events.PaymentReceivedEvent;
 import pl.sudnev.orderflow.order.events.ProductAddedEvent;
 import pl.sudnev.orderflow.order.events.ProductRemovedEvent;
-import pl.sudnev.orderflow.shared.OrderValidationException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

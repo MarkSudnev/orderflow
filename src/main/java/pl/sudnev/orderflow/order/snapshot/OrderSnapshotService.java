@@ -3,7 +3,7 @@ package pl.sudnev.orderflow.order.snapshot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sudnev.orderflow.order.OrderDetailsDto;
-import pl.sudnev.orderflow.shared.OrderNotFoundException;
+import pl.sudnev.orderflow.order.OrderNotFoundException;
 
 import java.util.UUID;
 

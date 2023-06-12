@@ -1,4 +1,4 @@
-package pl.sudnev.orderflow.shared;
+package pl.sudnev.orderflow.order;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 
