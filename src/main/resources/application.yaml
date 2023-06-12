@@ -1,0 +1,9 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: order-service
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/ordersdb?authSource=admin
