@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/petal.min.css}"/>
+  <script type="application/javascript" th:src="@{/js/petal.min.js}"></script>
+  <title>Order details</title>
+</head>
+<body>
+<div class="container">
+  <h4>
+    <span th:text="${order.getNumber()}"/>
+    <span class="label accent" th:text="${order.getStatus()}"/>
+  </h4>
+  <div>
+    <div class="row">
+      <div class="col-2">ID</div>
+      <div class="col-2" th:text="${order.getId()}">ID</div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">Number</div>
+      <div class="col-2" th:text="${order.getNumber()}">Number</div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">Customer</div>
+      <div class="col-2" th:text="${order.getCustomer()}">Customer</div>
+    </div>
+
+    <div class="row">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="prod : ${order.getProducts()}">
+          <td th:text="${prod.getCode()}"/>
+          <td th:text="${prod.getName()}"/>
+          <td th:text="${prod.getPrice()}"/>
+          <td th:text="${prod.getQuantity()}"/>
+          <td th:text="${prod.getSubtotal()}"/>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="3"></td>
+          <td><strong>Total</strong></td>
+          <td>
+            <strong th:text="${order.getTotal()}"/>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="btn-group">
+    <a class="btn" th:href="@{/orders/{orderId}/edit(orderId=${order.getId()})}">Edit</a>
+    <a class="btn" th:href="@{/orders/{orderId}/payments/make(orderId=${order.getId()})}">Payment</a>
+    <a class="btn green" th:href="@{/orders/{orderId}/products/add(orderId=${order.getId()})}">Add Product</a>
+    <a class="btn red" th:href="@{/orders/{orderId}/delete(orderId=${order.getId()})}">
+      <i class="petalicon cross-round-filled"></i>
+      Cancel
+    </a>
+  </div>
+</div>
+</body>
+</html>
