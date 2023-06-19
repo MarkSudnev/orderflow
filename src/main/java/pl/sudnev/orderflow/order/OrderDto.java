@@ -10,4 +10,5 @@ public class OrderDto {
   String number;
   String customer;
   Double total;
+  OrderState state;
 }

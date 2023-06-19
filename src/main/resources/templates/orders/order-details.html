@@ -37,6 +37,7 @@
           <th>Price</th>
           <th>Quantity</th>
           <th>Subtotal</th>
+          <th>Control</th>
         </tr>
         </thead>
         <tbody>
@@ -46,11 +47,19 @@
           <td th:text="${prod.getPrice()}"/>
           <td th:text="${prod.getQuantity()}"/>
           <td th:text="${prod.getSubtotal()}"/>
+          <td>
+            <a
+                class="btn red"
+                th:href="@{/orders/{orderId}/products/{code}/remove/{qty}(orderId=${orderId}, code=${prod.code}, qty=${prod.quantity})}"
+            >
+              Remove
+            </a>
+          </td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
-          <td colspan="3"></td>
+          <td colspan="4"></td>
           <td><strong>Total</strong></td>
           <td>
             <strong th:text="${order.getTotal()}"/>
@@ -61,10 +70,33 @@
     </div>
   </div>
   <div class="btn-group">
-    <a class="btn" th:href="@{/orders/{orderId}/edit(orderId=${order.getId()})}">Edit</a>
-    <a class="btn" th:href="@{/orders/{orderId}/payments/make(orderId=${order.getId()})}">Payment</a>
-    <a class="btn green" th:href="@{/orders/{orderId}/products/add(orderId=${order.getId()})}">Add Product</a>
-    <a class="btn red" th:href="@{/orders/{orderId}/delete(orderId=${order.getId()})}">
+    <a
+        class="btn"
+        th:unless="${order.getStatus() == 'CANCELLED'}"
+        th:href="@{/orders/{orderId}/edit(orderId=${order.getId()})}">
+      Edit
+    </a>
+    <a
+        class="btn"
+        th:href="@{/orders}">
+      Close
+    </a>
+    <a
+        class="btn"
+        th:if="${order.getStatus() == 'ISSUED'}"
+        th:href="@{/orders/{orderId}/payments/make(orderId=${order.getId()})}">
+      Payment
+    </a>
+    <a
+        class="btn green"
+        th:if="${order.getStatus() == 'NEW'}"
+        th:href="@{/orders/{orderId}/products/add(orderId=${order.getId()})}">
+      Add Product
+    </a>
+    <a
+        class="btn red"
+        th:unless="${order.getStatus() == 'CANCELLED'}"
+        th:href="@{/orders/{orderId}/delete(orderId=${order.getId()})}">
       <i class="petalicon cross-round-filled"></i>
       Cancel
     </a>

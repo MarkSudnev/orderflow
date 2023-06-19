@@ -14,4 +14,5 @@ public class OrderLineViewDto {
   private String number;
   private String customer;
   private Double total;
+  private String state;
 }

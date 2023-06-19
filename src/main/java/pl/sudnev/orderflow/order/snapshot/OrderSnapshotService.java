@@ -32,7 +32,13 @@ public class OrderSnapshotService {
   public Page<OrderDto> getOrders(final Pageable pageable) {
     return orderSnapshotRepository.findAll(pageable)
         .map(order ->
-            new OrderDto(order.getOrderId(), order.getNumber(), order.getCustomer(), order.getTotal())
+            new OrderDto(
+                order.getOrderId(),
+                order.getNumber(),
+                order.getCustomer(),
+                order.getTotal(),
+                order.getState()
+            )
         );
   }
 

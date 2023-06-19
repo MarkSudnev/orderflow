@@ -25,4 +25,8 @@ public class ProductRepository {
         .filter(p -> p.getCode().equals(code))
         .findFirst();
   }
+
+  public List<Product> getAll() {
+    return storage;
+  }
 }

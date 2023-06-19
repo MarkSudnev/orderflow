@@ -15,6 +15,7 @@
       <th>Number</th>
       <th>Customer</th>
       <th>Total</th>
+      <th>Status</th>
     </tr>
     <tr th:each="order : ${orderPage.getItems()}">
       <td>
@@ -25,6 +26,7 @@
       <td th:text="${order.getNumber()}"/>
       <td th:text="${order.getCustomer()}"/>
       <td th:text="${order.getTotal()}"/>
+      <td th:text="${order.getState()}"/>
     </tr>
   </table>
   <div class="row mt-5">
